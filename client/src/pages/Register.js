@@ -21,7 +21,7 @@ const Register = () => {
     const { user } = useAppContext()
     const navigate = useNavigate()
 
-    const { isLoading, showAlert, displayAlert, registerUser } = useAppContext()
+    const { isLoading, showAlert, displayAlert, setupUser } = useAppContext()
     const toggleMember = () => {
         setValues({...values, isMember: !values.isMember})
     }
@@ -39,9 +39,9 @@ const Register = () => {
         }
         const currentUser = {name, email, password}
         if(isMember) {
-            console.log('Already a memeber')
+            setupUser({currentUser, endPoint: 'login', alertText: 'Login Successful, Redirecting...',})
         } else {
-            registerUser(currentUser)
+            setupUser({currentUser, endPoint: 'register', alertText: 'New Account Created, Redirecting...',})
         }
     }
 
@@ -49,10 +49,11 @@ const Register = () => {
         if(user) {
             setTimeout(() => {
             navigate('/')
-        }, 3000)
+        }, 1500)
     }
     }, [user, navigate])
 
+    
   return (
     <Wrapper className="full-page">
         <ImageBackground img={img}/>
